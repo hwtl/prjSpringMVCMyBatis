@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Employee">
+	<select id="queryByUserCode" resultType="employee">
+		SELECT *
+		FROM employee_test 
+		WHERE userCode = #{userCode}
+	</select>
+	
+	<select id="queryList" resultType="employee">
+		SELECT *
+		FROM employee_test
+	</select>
+	
+	<select id="queryListLikeName" resultType="employee" parameterType="java.util.HashMap">
+		SELECT *
+		FROM employee_test 
+		WHERE userName like '#{userName}%'
+	</select>
+	
+	<select id="employeeCount" resultType="int">
+		SELECT count(1)
+		FROM employee_test 
+	</select>
+	
+	<insert id="insertEmployee" parameterType="employee">
+		insert into employee_test (userCode,userName,mobilePhone,sex)
+		values (#{userCode},#{userName},#{mobilePhone},#{sex})
+	</insert>
+	
+	<update id="updateEmployee" parameterType="employee">
+		update employee_test set sex = #{sex}
+		where userCode = #{userCode}
+	</update>
+	
+	<update id="updateEmployee2">
+		update employee_test set sex = 2
+		where userCode = 100
+	</update>
+	
+	<update id="deleteEmployee" parameterType="int">
+		delete from employee_test
+		where userCode = #{userCode}
+	</update>
+	
+	
+	<select id="queryByPage" parameterType="java.util.HashMap" resultType="employee">
+		select * from employee_test
+		 <if test="extensionSql != null">  
+	        ${extensionSql}  
+	    </if>  
+	</select>
+</mapper>
